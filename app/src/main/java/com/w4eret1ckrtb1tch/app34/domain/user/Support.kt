@@ -1,4 +1,4 @@
-package com.w4eret1ckrtb1tch.app34.domain
+package com.w4eret1ckrtb1tch.app34.domain.user
 
 import com.google.gson.annotations.SerializedName
 

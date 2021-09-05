@@ -6,13 +6,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
 import com.w4eret1ckrtb1tch.app34.databinding.ActivityMainBinding
-import com.w4eret1ckrtb1tch.app34.domain.User
-import com.w4eret1ckrtb1tch.app34.domain.Data
+import com.w4eret1ckrtb1tch.app34.domain.user.Data
+import com.w4eret1ckrtb1tch.app34.domain.user.User
 import okhttp3.*
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
-import java.lang.Exception
 import java.net.URL
 import java.util.concurrent.Executors
 import javax.net.ssl.HttpsURLConnection
@@ -33,6 +32,15 @@ class MainActivity : AppCompatActivity() {
         // TODO: 04.09.2021 Повышенная сложность*: распарсите объект при помощи Gson и вставьте полученные данные в верстку.
         viewModel.getUser().observe(this) { user ->
             binding.user.text = user.toString()
+        }
+
+        viewModel.getMovie().observe(this) { movie ->
+            binding.user.text = movie.toString()
+        }
+
+        binding.search.setOnClickListener {
+            val movieId = binding.query.text.toString().toInt()
+            viewModel.setMovie(movieId)
         }
 
 
