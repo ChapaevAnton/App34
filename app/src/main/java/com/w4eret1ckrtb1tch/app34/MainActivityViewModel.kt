@@ -7,8 +7,8 @@ import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
 import com.w4eret1ckrtb1tch.app34.api.TmdbAPI
 import com.w4eret1ckrtb1tch.app34.domain.movie.Movie
-import com.w4eret1ckrtb1tch.app34.domain.user.Data
-import com.w4eret1ckrtb1tch.app34.domain.user.User
+import com.w4eret1ckrtb1tch.app34.data.dto.UserDto
+import com.w4eret1ckrtb1tch.app34.data.dto.User
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.util.concurrent.Executors
@@ -35,7 +35,7 @@ class MainActivityViewModel : ViewModel() {
             okHttpClient.newCall(requestGet).execute().use { response ->
                 val jsonStr = response.body?.string()
                 Log.d("TAG", "data2: $jsonStr")
-                val data = gson.fromJson(jsonStr, Data::class.java)
+                val data = gson.fromJson(jsonStr, UserDto::class.java)
                 Log.d("TAG", "user2: ${data.user}")
                 user.postValue(data.user)
             }
