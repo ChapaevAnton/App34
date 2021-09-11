@@ -6,9 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
 import com.w4eret1ckrtb1tch.app34.api.TmdbAPI
-import com.w4eret1ckrtb1tch.app34.domain.movie.Movie
-import com.w4eret1ckrtb1tch.app34.data.dto.UserDto
-import com.w4eret1ckrtb1tch.app34.data.dto.User
+import com.w4eret1ckrtb1tch.app34.data.dto.movie.Movie
+import com.w4eret1ckrtb1tch.app34.data.dto.user.UserDto
+import com.w4eret1ckrtb1tch.app34.data.dto.user.User
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.util.concurrent.Executors

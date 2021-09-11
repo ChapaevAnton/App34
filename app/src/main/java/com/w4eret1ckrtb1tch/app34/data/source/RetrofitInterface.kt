@@ -1,7 +1,7 @@
 package com.w4eret1ckrtb1tch.app34.data.source
 
-import com.w4eret1ckrtb1tch.app34.data.dto.UserDto
-import com.w4eret1ckrtb1tch.app34.data.dto.UsersDto
+import com.w4eret1ckrtb1tch.app34.data.dto.user.UserDto
+import com.w4eret1ckrtb1tch.app34.data.dto.user.UsersDto
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path

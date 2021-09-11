@@ -1,4 +1,4 @@
-package com.w4eret1ckrtb1tch.app34.data.dto
+package com.w4eret1ckrtb1tch.app34.data.dto.user
 
 import com.google.gson.annotations.SerializedName
 

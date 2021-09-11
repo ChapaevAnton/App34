@@ -5,9 +5,9 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
-import com.w4eret1ckrtb1tch.app34.data.dto.User
-import com.w4eret1ckrtb1tch.app34.data.dto.UserDto
-import com.w4eret1ckrtb1tch.app34.data.dto.UsersDto
+import com.w4eret1ckrtb1tch.app34.data.dto.user.User
+import com.w4eret1ckrtb1tch.app34.data.dto.user.UserDto
+import com.w4eret1ckrtb1tch.app34.data.dto.user.UsersDto
 import com.w4eret1ckrtb1tch.app34.data.source.RetrofitInterface
 import com.w4eret1ckrtb1tch.app34.databinding.ActivityMainBinding
 import okhttp3.*
