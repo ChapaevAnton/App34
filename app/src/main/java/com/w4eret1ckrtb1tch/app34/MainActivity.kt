@@ -1,22 +1,29 @@
 package com.w4eret1ckrtb1tch.app34
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.w4eret1ckrtb1tch.app34.data.dto.user.User
 import com.w4eret1ckrtb1tch.app34.data.dto.user.UserDto
 import com.w4eret1ckrtb1tch.app34.data.dto.user.UsersDto
 import com.w4eret1ckrtb1tch.app34.data.source.RetrofitInterface
 import com.w4eret1ckrtb1tch.app34.databinding.ActivityMainBinding
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import okhttp3.*
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
 import java.net.URL
+import java.text.DateFormat
 import java.util.concurrent.Executors
 import javax.net.ssl.HttpsURLConnection
 
@@ -27,6 +34,7 @@ class MainActivity : AppCompatActivity() {
         ViewModelProvider.NewInstanceFactory().create(MainActivityViewModel::class.java)
     }
 
+    @SuppressLint("CheckResult")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
@@ -34,9 +42,27 @@ class MainActivity : AppCompatActivity() {
 
 
         // TODO: 11.09.2021 retrofit
+
+        val interceptor = HttpLoggingInterceptor().apply {
+            if(BuildConfig.DEBUG) level = HttpLoggingInterceptor.Level.BASIC
+        }
+
+        val okHttpClient1 = OkHttpClient.Builder()
+            .addInterceptor(interceptor)
+            .build()
+
+        val gsonBuilder = GsonBuilder()
+            .enableComplexMapKeySerialization()
+            .disableInnerClassSerialization()
+            .setDateFormat(DateFormat.LONG)
+            .setVersion(1.2)
+            .create()
+
         val retrofit = Retrofit.Builder()
             .baseUrl("https://reqres.in/")
-            .addConverterFactory(GsonConverterFactory.create(Gson()))
+            .addConverterFactory(GsonConverterFactory.create(gsonBuilder))
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .client(okHttpClient1)
             .build()
         val service = retrofit.create(RetrofitInterface::class.java)
 
@@ -60,19 +86,14 @@ class MainActivity : AppCompatActivity() {
 
         service.getUsers(5).enqueue(callback)
 
-        service.getUser(10).enqueue(object : retrofit2.Callback<UserDto> {
-            override fun onResponse(
-                call: retrofit2.Call<UserDto>,
-                response: retrofit2.Response<UserDto>
-            ) {
-                Log.d("TAG", "User onResponse_retrofit ok: ${response.body()}")
-            }
-
-            override fun onFailure(call: retrofit2.Call<UserDto>, t: Throwable) {
-                t.printStackTrace()
-            }
-
-        })
+        service.getUser(10)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ userDto ->
+                Log.d("TAG", "User RxJava2CallAdapterFactory ok: $userDto")
+            }, { error ->
+                error.printStackTrace()
+            })
 
         // TODO: 04.09.2021 Повышенная сложность*: распарсите объект при помощи Gson и вставьте полученные данные в верстку.
         viewModel.getUser().observe(this) { user ->

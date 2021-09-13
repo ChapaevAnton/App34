@@ -2,6 +2,7 @@ package com.w4eret1ckrtb1tch.app34.data.source
 
 import com.w4eret1ckrtb1tch.app34.data.dto.user.UserDto
 import com.w4eret1ckrtb1tch.app34.data.dto.user.UsersDto
+import io.reactivex.Single
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -16,6 +17,6 @@ interface RetrofitInterface {
     fun getUsers(@Query("page") page: Int): Call<UsersDto>
 
     @GET("/api/users/{id}")
-    fun getUser(@Path("id") id: Int): Call<UserDto>
+    fun getUser(@Path("id") id: Int): Single<UserDto>
 
 }
