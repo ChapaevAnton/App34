@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.w4eret1ckrtb1tch.app34.BindingAdapters.setImageUrl
 import com.w4eret1ckrtb1tch.app34.data.dto.user.User
 import com.w4eret1ckrtb1tch.app34.data.dto.user.UserDto
 import com.w4eret1ckrtb1tch.app34.data.dto.user.UsersDto
@@ -98,6 +99,7 @@ class MainActivity : AppCompatActivity() {
         // TODO: 04.09.2021 Повышенная сложность*: распарсите объект при помощи Gson и вставьте полученные данные в верстку.
         viewModel.getUser().observe(this) { user ->
             binding.user.text = user.toString()
+            binding.avatar.setImageUrl(user.avatar)
         }
 
         viewModel.getMovie().observe(this) { movie ->
